@@ -34,3 +34,16 @@ variable "name_tag" {
    description = "Name of the EC2 instance"
    default     = "My EC2 Instance"
 }
+
+variable "sg" {
+  name        = "jenkins_sg"
+  description = "Open ports 22"
+  #Allow incoming TCP requests on port 22 from any IP
+  ingress {
+    description = "Incoming SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["69.42.6.44/32"]
+  }
+ }
