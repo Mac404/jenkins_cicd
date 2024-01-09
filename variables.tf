@@ -36,4 +36,5 @@ variable "name_tag" {
 }
 
 variable "security_group_id" {
+ description = "security group"
 }
