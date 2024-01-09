@@ -6,8 +6,7 @@ resource "aws_key_pair" "autodeploy" {
 resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
-  security_group_id    = module.aws_security_group.jenkins_sg
-
+  
   tags = {
     Name = var.name_tag,
   }
@@ -19,6 +18,7 @@ resource "aws_instance" "public_instance" {
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
   description = "Open ports 22"
+  vpc_id = data.aws_vpc.default.id
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
@@ -29,3 +29,5 @@ resource "aws_security_group" "jenkins_sg" {
     cidr_blocks = ["69.42.6.44/32"]
   }
 }
+
+
