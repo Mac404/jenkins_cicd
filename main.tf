@@ -13,11 +13,6 @@ resource "aws_security_group" "jenkins_sg" {
   }
 }
 
-resource "aws_key_pair" "autodeploy" {
-  key_name   = "autodeploy"  # Set a unique name for your key pair
-  public_key = file("/var/jenkins_home/.ssh/id_rsa.pub")
-}
-
 resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
@@ -29,6 +24,13 @@ resource "aws_instance" "public_instance" {
   
   key_name = aws_key_pair.autodeploy.key_name  # Link the key pair to the instance
 }
+
+resource "aws_key_pair" "autodeploy" {
+  key_name   = "autodeploy"  # Set a unique name for your key pair
+  public_key = file("/var/jenkins_home/.ssh/id_rsa.pub")
+}
+
+
 
 
 
