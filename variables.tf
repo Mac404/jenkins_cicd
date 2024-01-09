@@ -34,3 +34,6 @@ variable "name_tag" {
    description = "Name of the EC2 instance"
    default     = "My EC2 Instance"
 }
+
+variable "security_group_id" {
+}
