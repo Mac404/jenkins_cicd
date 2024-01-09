@@ -7,3 +7,7 @@ output "instance_id" {
  value       = aws_instance.public_instance.id
  description = "Instance ID"
 }
+
+output "securitygroup_id" {
+  value = aws_security_group.jenkins_sg
+}
