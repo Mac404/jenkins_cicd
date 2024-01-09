@@ -8,6 +8,3 @@ output "instance_id" {
  description = "Instance ID"
 }
 
-output "securitygroup_id" {
-  value = aws_security_group.jenkins_sg
-}
