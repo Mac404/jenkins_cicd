@@ -37,5 +37,5 @@ variable "name_tag" {
 variable "sg" {
    type        = string
    description = "security group"
-   default     = ""
+   default     = "jenkins_sg"
 }
