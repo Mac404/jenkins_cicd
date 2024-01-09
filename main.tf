@@ -6,7 +6,7 @@ resource "aws_key_pair" "autodeploy" {
 resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
-  security_group_id    = module.aws_security_group.jenkins_sg
+  
 
   tags = {
     Name = var.name_tag,
