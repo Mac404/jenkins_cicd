@@ -18,7 +18,7 @@ resource "aws_instance" "public_instance" {
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
   description = "Open ports 22"
-  vpc_id = data.aws_vpc.default.id
+#  vpc_id = data.aws_vpc.default.id
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
