@@ -117,7 +117,7 @@ resource "aws_route_table" "private_subnets" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = element(aws_nat_gateway.nat_gw, count.index).id
+    gateway_id = aws_nat_gateway.nat_gw.id
   }
 
   tags = {
