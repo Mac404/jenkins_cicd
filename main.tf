@@ -10,6 +10,11 @@ resource "aws_instance" "public_instance" {
   key_name = aws_key_pair.autodeploy.key_name  # Link the key pair to the instance
 }
 
+resource "aws_key_pair" "autodeploy" {
+  key_name   = "autodeploy"  # Set a unique name for your key pair
+  public_key = file("/var/jenkins_home/.ssh/id_rsa.pub")
+}
+
 #Create security group 
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
@@ -25,11 +30,7 @@ resource "aws_security_group" "jenkins_sg" {
   }
 }
 
-resource "aws_key_pair" "autodeploy" {
-  key_name   = "autodeploy"  # Set a unique name for your key pair
-  public_key = file("/var/jenkins_home/.ssh/id_rsa.pub")
-}
-
+#create the EBS volume
 resource "aws_ebs_volume" "st1" {
  availability_zone = aws_instance.public_instance.availability_zone
  size = 5
@@ -38,6 +39,7 @@ resource "aws_ebs_volume" "st1" {
   }
 }
 
+#attach the EBS volume to the EC2 instance
 resource "aws_volume_attachment" "ebs" {
   device_name = "/dev/sdh"
   volume_id = aws_ebs_volume.st1.id
