@@ -30,3 +30,16 @@ resource "aws_key_pair" "autodeploy" {
   public_key = file("/var/jenkins_home/.ssh/id_rsa.pub")
 }
 
+resource "aws_ebs_volume" "st1" {
+ availability_zone = aws_instance.task2.availability_zone
+ size = 5
+ tags = {
+   Name = " My Volume"
+  }
+
+resource "aws_volume_attachment" "ebs" {
+  device_name = "/dev/sdh"
+  volume_id = aws_ebs_volume.st1.id
+  instance_id = aws_instance.task2.id
+}
+
