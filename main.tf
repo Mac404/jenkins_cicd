@@ -88,10 +88,9 @@ resource "aws_eip" "nat_gateways" {
 }
 
 resource "aws_nat_gateway" "nat_gw" {
-  count         = length(aws_subnet.private_subnets)
-  allocation_id = element(aws_eip.nat_gateways, count.index).id
-  subnet_id     = element(aws_subnet.private_subnets, count.index).id
-}
+  allocation_id = ${(aws_eip.nat_gateways.id}"
+  subnet_id = "${aws_subnet.private_subnets.id}"
+  }
 
 
 resource "aws_route_table" "public_subnets" {
