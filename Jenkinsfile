@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ulissesss/jenkins_cisd.git'
+                git branch: 'main', url: 'https://github.com/ulissesss/jenkins_cicd.git'
             }
         }
         stage('Terraform init') {
