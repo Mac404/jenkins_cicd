@@ -31,7 +31,7 @@ resource "aws_key_pair" "autodeploy" {
 }
 
 resource "aws_ebs_volume" "st1" {
- availability_zone = aws_instance.task2.availability_zone
+ availability_zone = aws_instance.public_instance.availability_zone
  size = 5
  tags = {
    Name = " My Volume"
