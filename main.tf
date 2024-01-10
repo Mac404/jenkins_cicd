@@ -3,6 +3,7 @@ resource "aws_instance" "public_instance" {
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
   subnet_id = "${aws_subnet.public_subnets.id}"
+  ecs_associate_public_ip_address = "true"
     
   tags = {
     Name = var.name_tag,
@@ -50,8 +51,6 @@ resource "aws_volume_attachment" "ebs" {
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
-  instance_tenancy = "default"
-  enable_dns_hostnames = "true"
 
   tags = {
     Name = "${var.vpc_name}-VPC"
