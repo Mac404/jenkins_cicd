@@ -2,8 +2,8 @@ resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
-  vpc_id = "${aws_vpc.main.id}"
-  
+  subnet_id = "${aws_subnet.public_subnets}"
+    
   tags = {
     Name = var.name_tag,
   }
@@ -20,6 +20,7 @@ resource "aws_key_pair" "autodeploy" {
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
   description = "Open ports 22"
+  #vpc_id = "${aws_vpc.main.id}"
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
