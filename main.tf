@@ -2,8 +2,8 @@ resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
-  #subnet_id      = aws_route_table_association.public_subnet_asso.id
-  
+  subnet_id = "${aws_subnet.public_subnets.id}"
+    
   tags = {
     Name = var.name_tag,
   }
@@ -20,6 +20,7 @@ resource "aws_key_pair" "autodeploy" {
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
   description = "Open ports 22"
+  vpc_id = "${aws_vpc.main.id}"
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
@@ -28,6 +29,13 @@ resource "aws_security_group" "jenkins_sg" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["69.42.6.44/32" , "98.42.124.215/32", "192.168.1.175/32" ]
+  }
+# Internet access to anywhere
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -48,58 +56,63 @@ resource "aws_volume_attachment" "ebs" {
 }
 
 resource "aws_vpc" "main" {
- cidr_block = "10.0.0.0/16"
- 
- tags = {
-   Name = "Project VPC"
- }
-}
+  cidr_block = "10.0.0.0/16"
 
-resource "aws_subnet" "public_subnets" {
- count      = length(var.public_subnet_cidrs)
- vpc_id     = aws_vpc.main.id
- cidr_block = element(var.public_subnet_cidrs, count.index)
- 
- tags = {
-   Name = "Public Subnet ${count.index + 1}"
- }
-}
- 
-resource "aws_subnet" "private_subnets" {
- count      = length(var.private_subnet_cidrs)
- vpc_id     = aws_vpc.main.id
- cidr_block = element(var.private_subnet_cidrs, count.index)
- 
- tags = {
-   Name = "Private Subnet ${count.index + 1}"
- }
+  tags = {
+    Name = "${var.vpc_name}-VPC"
+  }
 }
 
 resource "aws_internet_gateway" "gw" {
- vpc_id = aws_vpc.main.id
- 
- tags = {
-   Name = "Project VPC IG"
- }
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.vpc_name} IG"
+  }
 }
 
-resource "aws_route_table" "second_rt" {
- vpc_id = aws_vpc.main.id
+resource "aws_subnet" "public_subnets" {
+     vpc_id = aws_vpc.main.id
+     cidr_block = "10.0.1.0/24"
+      map_public_ip_on_launch = true
  
- route {
-   cidr_block = "0.0.0.0/0"
-   gateway_id = aws_internet_gateway.gw.id
- }
- 
- tags = {
-   Name = "2nd Route Table"
- }
+     tags = {
+         Name = "my_public_subnet"
+       } 
+}
+
+resource "aws_subnet" "private_subnets" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.2.0/24"
+
+  tags = {
+    Name = "my_private_subnet"
+  }
+}
+
+
+resource "aws_route_table" "subnets" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+  tags = {
+    Name = "Subnet Route Table"
+  }
 }
 
 resource "aws_route_table_association" "public_subnet_asso" {
- count = length(var.public_subnet_cidrs)
- subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
- route_table_id = aws_route_table.second_rt.id
+    subnet_id = "${aws_subnet.public_subnets.id}"
+    route_table_id = "${aws_route_table.subnets.id}"
+}
+
+
+resource "aws_route_table_association" "private_subnet_asso" {
+  subnet_id = "${aws_subnet.private_subnets.id}"
+  route_table_id = "${aws_route_table.subnets.id}"
 }
 
 
