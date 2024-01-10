@@ -41,6 +41,6 @@ resource "aws_ebs_volume" "st1" {
 resource "aws_volume_attachment" "ebs" {
   device_name = "/dev/sdh"
   volume_id = aws_ebs_volume.st1.id
-  instance_id = aws_instance.id
+  instance_id = aws_instance.public_instance.id
 }
 
