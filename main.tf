@@ -75,7 +75,7 @@ resource "aws_subnet" "public_subnets" {
 
 resource "aws_subnet" "private_subnets" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = 10.0.2.0/24
+  cidr_block        = "10.0.2.0/24"
 
   tags = {
     Name = "my_private_subnet"
