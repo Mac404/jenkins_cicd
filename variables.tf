@@ -37,15 +37,12 @@ variable "name_tag" {
 
 variable "vpc_name" {
   type    = string
+  default = "Project VPC"
 }
 
 variable "vpc_cidr_block" {
   type    = string
-}
-
-variable "azs" {
-  type        = list(string)
-  description = "Availability Zones"
+  default = ["10.0.0.0/16"]
 }
 
 variable "public_subnet_cidrs" {
