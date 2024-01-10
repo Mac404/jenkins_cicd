@@ -2,7 +2,7 @@ resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
-  #subnet_id      = aws_route_table_association.public_subnet_asso.id
+  vpc_id = "${aws_vpc.main.id}"
   
   tags = {
     Name = var.name_tag,
