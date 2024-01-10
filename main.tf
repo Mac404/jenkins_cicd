@@ -110,9 +110,8 @@ resource "aws_route_table" "public_subnets" {
 }
 
 resource "aws_route_table_association" "public_subnet_asso" {
-  count          = length(aws_subnet.public_subnets)
-  subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
-  route_table_id = aws_route_table.public_subnets.id
+    subnet_id = "${aws_subnet.public_subnets.id}"
+    route_table_id = "${aws_route_table.public_subnets.id}"
 }
 
 resource "aws_route_table" "private_subnets" {
