@@ -113,7 +113,6 @@ resource "aws_route_table_association" "public_subnet_asso" {
 }
 
 resource "aws_route_table" "private_subnets" {
-  count  = length(aws_nat_gateway.nat_gw)
   vpc_id = aws_vpc.main.id
 
   route {
