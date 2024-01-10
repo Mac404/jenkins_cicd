@@ -20,7 +20,7 @@ resource "aws_key_pair" "autodeploy" {
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
   description = "Open ports 22"
-  #vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${aws_vpc.main.id}"
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
@@ -67,7 +67,6 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_subnet" "public_subnets" {
      vpc_id = aws_vpc.main.id
      cidr_block = "10.0.1.0/24"
-     map_public_ip_on_launch = "true"
  
      tags = {
          Name = "my_public_subnet"
@@ -75,12 +74,11 @@ resource "aws_subnet" "public_subnets" {
 }
 
 resource "aws_subnet" "private_subnets" {
-  count             = length(var.private_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
-  cidr_block        = element(var.private_subnet_cidrs, count.index)
+  cidr_block        = 10.0.2.0/24
 
   tags = {
-    Name = "Private Subnet ${count.index + 1}"
+    Name = "my_private_subnet"
   }
 }
 
@@ -129,9 +127,8 @@ resource "aws_route_table" "private_subnets" {
 }
 
 resource "aws_route_table_association" "private_subnet_asso" {
-  count          = length(aws_subnet.private_subnets)
-  subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
-  route_table_id = element(aws_route_table.private_subnets[*].id, count.index)
+  subnet_id = "${aws_subnet.private_subnets.id}"
+  route_table_id = "${aws_route_table.private_subnets.id}"
 }
 
 
