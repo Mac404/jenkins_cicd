@@ -36,6 +36,7 @@ resource "aws_ebs_volume" "st1" {
  tags = {
    Name = " My Volume"
   }
+}
 
 resource "aws_volume_attachment" "ebs" {
   device_name = "/dev/sdh"
