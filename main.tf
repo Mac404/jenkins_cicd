@@ -65,13 +65,13 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_subnet" "public_subnets" {
-  count             = length(var.public_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = element(var.public_subnet_cidrs, count.index)
-
-  tags = {
-    Name = "Public Subnet ${count.index + 1}"
-  }
+     vpc_id = aws_vpc.main.id
+     cidr_block = "192.168.0.0/24"
+     map_public_ip_on_launch = "true"
+ 
+     tags = {
+         Name = "my_public_subnet"
+       } 
 }
 
 resource "aws_subnet" "private_subnets" {
