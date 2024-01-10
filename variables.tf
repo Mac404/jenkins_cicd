@@ -41,14 +41,3 @@ variable "vpc_name" {
 }
 
 
-variable "public_subnet_cidrs" {
-  type        = list(string)
-  description = "Public Subnet CIDR"
-  default     = ["10.0.1.0/24"]
-}
-
-variable "private_subnet_cidrs" {
-  type        = list(string)
-  description = "Private Subnet CIDR"
-  default     = ["10.0.4.0/24"]
-}
