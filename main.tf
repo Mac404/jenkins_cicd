@@ -34,7 +34,7 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["69.42.6.44/32" , "98.42.124.215/32", "192.168.1.175/32" ]
+    cidr_blocks = ["69.42.6.44/32" , "98.42.124.215/32", "71.198.26.65/32" ]
   }
 # Internet access to anywhere
   egress {
@@ -150,6 +150,8 @@ resource "aws_s3_bucket_policy" "BucketPolicy" {
       "Condition": {
         "IpAddress": {
           "aws:SourceIp": "69.42.6.44/32"
+          "aws:SourceIp": "98.42.124.215/32"  
+          "aws:SourceIp": "71.198.26.65/32"
         }
       }
     },
