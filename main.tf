@@ -3,7 +3,14 @@ resource "aws_instance" "public_instance" {
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
   subnet_id = "${aws_subnet.public_subnets.id}"
-    
+  user_data = <<-EOF
+  #!/bin/bash
+  echo "*** Installing apache2"
+  sudo apt update -y
+  sudo apt install apache2 -y
+  echo "*** Completed Installing apache2"
+  EOF
+ 
   tags = {
     Name = var.name_tag,
   }
@@ -24,10 +31,9 @@ resource "aws_security_group" "jenkins_sg" {
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
-    description = "Incoming SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["69.42.6.44/32" , "98.42.124.215/32", "192.168.1.175/32" ]
   }
 # Internet access to anywhere
@@ -116,7 +122,17 @@ resource "aws_route_table_association" "private_subnet_asso" {
 }
 
 
-
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "mybucket3445345656457676878687867867867"
+  acl    = "private"
+  force_destroy = true
+  lifecycle {
+    prevent_destroy = false
+  }
+  versioning {
+    enabled = true
+  }
+}
 
 
 
