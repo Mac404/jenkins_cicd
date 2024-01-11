@@ -126,9 +126,6 @@ resource "aws_s3_bucket" "my_bucket" {
   bucket = "mybucket3445345656457676878687867867867"
 }
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.my_bucket.id
-  acl    = "public-read"
-}
+
 
 
