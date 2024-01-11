@@ -121,3 +121,14 @@ resource "aws_route_table_association" "private_subnet_asso" {
   route_table_id = "${aws_route_table.subnets.id}"
 }
 
+
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "day67taskbucket0304"
+}
+
+resource "aws_s3_bucket_acl" "bucket_acl" {
+  bucket = aws_s3_bucket.my_bucket.id
+  acl    = "public-read"
+}
+
+
