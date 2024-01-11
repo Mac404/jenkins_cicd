@@ -1,2 +1,2 @@
 # jenkins-terraform
-Deploy IaC using Jenkins and Terraform
+Evaluation milestone 7
