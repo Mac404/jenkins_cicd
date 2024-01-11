@@ -10,7 +10,7 @@ resource "aws_instance" "public_instance" {
   sudo apt install apache2 -y
   echo "*** Completed Installing apache2"
   wget https://raw.githubusercontent.com/ulissesss/jenkins_cicd/Dev/index.html
-  wget https://github.com/ulissesss/jenkins_cicd/blob/Dev/headshot.jpg
+  wget https://raw.githubusercontent.com/ulissesss/jenkins_cicd/Dev/headshot.jpg
   wget https://raw.githubusercontent.com/ulissesss/jenkins_cicd/Dev/w3.css
   sudo mv /var/www/html/index.html /var/www/html/index.html.bak
   sudo cp index.html /var/www/html
