@@ -31,7 +31,6 @@ resource "aws_security_group" "jenkins_sg" {
 
   #Allow incoming TCP requests on port 22 from any IP
   ingress {
-    description = "Incoming SSH"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
