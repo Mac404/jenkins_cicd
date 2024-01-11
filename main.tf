@@ -134,28 +134,3 @@ resource "aws_s3_bucket" "my_bucket" {
   }
 }
 
-resource "aws_s3_bucket_policy" "BucketPolicy" {
-  bucket = aws_s3_bucket.my_bucket.id
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Principal": "*",
-      "Action": "s3:*",
-      "Resource": [
-        "arn:aws:s3:::/*"
-      ],
-      "Effect": "Allow",
-      "Condition": {
-        "IpAddress": {
-          "aws:SourceIp": "69.42.6.44/32"
-        }
-      }
-    }
-  ]
-}
-POLICY
-}
-
-
