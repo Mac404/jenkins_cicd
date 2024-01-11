@@ -125,6 +125,27 @@ resource "aws_route_table_association" "private_subnet_asso" {
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "mybucket3445345656457676878687867867867"
   acl    = "private"
+
+   policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::/*"
+      ],
+      "Effect": "Allow",
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": "69.42.6.44/32"
+        }
+      }
+    }
+  ]
+}
+
   force_destroy = true
   lifecycle {
     prevent_destroy = false
