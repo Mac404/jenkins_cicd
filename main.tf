@@ -149,9 +149,8 @@ resource "aws_s3_bucket_policy" "BucketPolicy" {
       "Effect": "Allow",
       "Condition": {
         "IpAddress": {
-          "aws:SourceIp": "69.42.6.44/32"
-          "aws:SourceIp": "98.42.124.215/32"  
-          "aws:SourceIp": "71.198.26.65/32"
+          "aws:SourceIp": ["69.42.6.44/32", "98.42.124.215/32", "71.198.26.65/32" ]
+        
         }
       }
     },
