@@ -115,6 +115,29 @@ resource "aws_route_table_association" "private_subnet_asso" {
   route_table_id = "${aws_route_table.subnets.id}"
 }
 
+resource "aws_instance" "web" {
+  ami             = var.ami
+  instance_type =  var.instance_type
+  key_name = aws_key_pair.autodeploy.key_name 
+  vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
+  subnet_id = "${aws_subnet.public_subnets.id}"
+
+  user_data = <<-EOF
+  #!/bin/bash
+  echo "*** Installing apache2"
+  sudo apt update -y
+  sudo apt install apache2 -y
+  echo "*** Completed Installing apache2"
+  EOF
+
+  tags = {
+    Name = "web_instance"
+  }
+
+  volume_tags = {
+    Name = "web_instance"
+  } 
+}
 
 
 
