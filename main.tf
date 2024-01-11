@@ -143,7 +143,8 @@ resource "aws_s3_bucket_policy" "BucketPolicy" {
       "Principal": "*",
       "Action": "s3:*",
       "Resource": [
-        "arn:aws:s3:::/*"
+        aws_s3_bucket.my_bucket.arn,
+          "${aws_s3_bucket.my_bucket.arn}/*",
       ],
       "Effect": "Allow",
       "Condition": {
