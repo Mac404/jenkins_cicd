@@ -11,7 +11,7 @@ resource "aws_instance" "public_instance" {
   echo "*** Completed Installing apache2"
   wget https://raw.githubusercontent.com/ulissesss/jenkins_cicd/Dev/index.html
   wget https://github.com/ulissesss/jenkins_cicd/blob/Dev/headshot.png
-  wget https://raw.githubusercontent.com/alfonsoh/scripts/master/docker/my_first_docker/w3.css
+  wget https://raw.githubusercontent.com/ulissesss/jenkins_cicd/Dev/w3.css
   sudo mv /var/www/html/index.html /var/www/html/index.html.bak
   sudo cp index.html /var/www/html
   sudo cp headshot.png /var/www/html
