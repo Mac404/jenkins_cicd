@@ -124,9 +124,10 @@ resource "aws_route_table_association" "private_subnet_asso" {
 
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "mybucket3445345656457676878687867867867"
-   acl    = "private"
+  acl    = "private"
+  force_destroy = true
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
   versioning {
     enabled = true
