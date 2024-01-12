@@ -42,19 +42,19 @@ variable "vpc_name" {
 
 variable "app_name" {
    type        = string
-   description = "Instance type"
    default     = "windows"
 }
 variable "app_environment" {
    type        = string
-   description = "Instance type"
    default     = "prod"
 }
 
 variable "aws_key_name" {
    type        = string
-   description = "Instance type"
    default     = "win_key"
 }
 
-
+variable "win" {
+   type        = string
+   default     = "ami-30540427"
+} 
