@@ -49,11 +49,6 @@ variable "app_environment" {
    default     = "prod"
 }
 
-variable "aws_key_name" {
-   type        = string
-   default     = "winkey"
-}
-
 variable "win_ami" {
    type        = string
    description = "Win2022"
