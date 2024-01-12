@@ -31,7 +31,7 @@ resource "aws_security_group" "windows" {
     from_port   = 3389
     to_port     = 3389
     protocol    = "TCP"
-    cidr_blocks = ["69.42.6.44/32" , "98.51.2.169/32", "71.198.26.65/32" ]
+    cidr_blocks = [ "69.42.6.44/32" , "98.42.124.215/32", "71.198.26.65/32", "108.84.158.98/32"  ]
   }
 # Internet access to anywhere
   egress {
