@@ -32,6 +32,7 @@ resource "local_file" "ssh_key" {
 #Create security group 
 resource "security_group" "windows" {
   #Allow incoming TCP requests on port 22 from any IP
+  name        = "jenkins2"
   ingress {
     from_port   = 0
     to_port     = 0
