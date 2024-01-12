@@ -21,10 +21,13 @@ resource "tls_private_key" "key_pair" {
 resource "aws_key_pair" "key_pair" {
   key_name   = "${lower(var.app_name)}-${lower(var.app_environment)}-windows-${lower(var.aws_region)}"  
   public_key = tls_private_key.key_pair.public_key_openssh
-   provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-   command = "echo '${tls_private_key.key_pair.private_key_pem}' > ./myKey.pem"
 }
 
+# Save file
+resource "local_file" "ssh_key" {
+  filename = "${aws_key_pair.key_pair.key_name}.pem"
+  content  = tls_private_key.key_pair.private_key_pem
+}
 
 #Create security group 
 resource "aws_security_group" "windows" {
