@@ -36,6 +36,6 @@ data "aws_ami" "windows-2012-r2" {
   owners      = ["amazon"]
   filter {
     name   = "name"
-    values = ["Windows_Server-2012-R2_RTM-English-64Bit-Base-*"]
+    values = ["Windows_Server-2012-R2*"]
   }
 }
