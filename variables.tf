@@ -54,7 +54,3 @@ variable "aws_key_name" {
    default     = "win_key"
 }
 
-variable "win" {
-   type        = string
-   default     = "ami-30540427"
-} 
