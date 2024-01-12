@@ -1,5 +1,5 @@
 resource "aws_instance" "windows-server" {
-     ami = var.win
+     data.aws_ami.windows-2019.id
      instance_type = var.instance_type
      availability_zone = var.aws_region
      vpc_security_group_ids    = [aws_security_group.jenkins_sg.id]
@@ -31,3 +31,11 @@ resource "local_file" "ssh_key" {
   content  = tls_private_key.key_pair.private_key_pem
 }
 
+data "aws_ami" "windows-2019" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["Windows_Server-2019-English-Full-Base*"]
+  }
+}
