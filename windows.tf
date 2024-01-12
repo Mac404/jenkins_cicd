@@ -5,8 +5,7 @@ resource "aws_instance" "windows-server" {
      key_name= "windows"
 
  tags = {
-    Name        = "${lower(var.app_name)}-${var.app_environment}-windows-server"
-    Environment = var.app_environment
+    Name        = "windows"
   }
 }
 
@@ -16,9 +15,9 @@ resource "aws_security_group" "windows" {
   #Allow incoming TCP requests on port 22 from any IP
   name        = "jenkins2"
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "TCP"
     cidr_blocks = ["69.42.6.44/32" , "98.51.2.169/32", "71.198.26.65/32" ]
   }
 # Internet access to anywhere
