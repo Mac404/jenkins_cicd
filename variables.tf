@@ -40,15 +40,6 @@ variable "vpc_name" {
   default = "Project VPC"
 }
 
-variable "app_name" {
-   type        = string
-   default     = "windows"
-}
-variable "app_environment" {
-   type        = string
-   default     = "prod"
-}
-
 variable "win_ami" {
    type        = string
    description = "Win2022"
