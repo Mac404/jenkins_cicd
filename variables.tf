@@ -40,4 +40,15 @@ variable "vpc_name" {
   default = "Project VPC"
 }
 
+variable "app_name" {
+   type        = string
+   description = "Instance type"
+   default     = ""
+}
+variable "app_environment" {
+   type        = string
+   description = "Instance type"
+   default     = ""
+}
+
 
