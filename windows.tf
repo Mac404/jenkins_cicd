@@ -3,7 +3,7 @@ resource "aws_instance" "windows-server" {
      instance_type = var.instance_type
      vpc_security_group_ids    = [aws_security_group.windows.id]
      key_name= "windows_deploy"
-     user_data = <<-EOF
+     user_data = <<EOF
      <powershell>
      #Copy the output of the command get-process in running.txt
      #Set path 
