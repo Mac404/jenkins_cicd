@@ -1,3 +1,6 @@
+#This is the main Terraform file that needs to be copied into Jenkins;
+#The Github Repo URL needs to change accordingly for each environment
+    
 pipeline {
     agent any
 
@@ -11,7 +14,7 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         AWS_DEFAULT_REGION    = 'us-east-1'
     }
-
+#check out the latest from github
     stages {
         stage('Checkout') {
             steps {
