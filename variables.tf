@@ -51,4 +51,10 @@ variable "app_environment" {
    default     = "prod"
 }
 
+variable "aws_key_name" {
+   type        = string
+   description = "Instance type"
+   default     = "win_key"
+}
+
 
