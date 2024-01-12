@@ -37,11 +37,17 @@ resource "aws_security_group" "jenkins_sg" {
   description = "Open ports 22"
   vpc_id = "${aws_vpc.main.id}"
 
-  #Allow incoming TCP requests on port 22 from any IP
+  #Allow incoming TCP requests on port 22 and from my IP
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
+    cidr_blocks = ["69.42.6.44/32" , "98.51.2.169/32", "71.198.26.65/32" ]
+  }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
     cidr_blocks = ["69.42.6.44/32" , "98.51.2.169/32", "71.198.26.65/32" ]
   }
 # Internet access to anywhere
