@@ -54,3 +54,8 @@ variable "aws_key_name" {
    default     = "win_key"
 }
 
+variable "win_ami" {
+   type        = string
+   description = "Win2022"
+   default     = "ami-06938c7701be658b4"
+}
