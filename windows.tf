@@ -1,7 +1,7 @@
 resource "aws_instance" "windows-server" {
      ami = data.aws_ami.windows.id
      instance_type = var.instance_type
-     availability_zone = var.availability_zone
+     availability_zone = var.aws_region
      vpc_security_group_ids    = [aws_security_group.jenkins_sg.id]
      key_name = var.aws_key_name
 
@@ -20,7 +20,7 @@ resource "tls_private_key" "key_pair" {
 
 # Create the Key Pair
 resource "aws_key_pair" "key_pair" {
-  key_name   = "${lower(var.app_name)}-${lower(var.app_environment)}-windows-${lower(var.region)}"  
+  key_name   = "${lower(var.app_name)}-${lower(var.app_environment)}-windows-${lower(var.aws_region)}"  
   public_key = tls_private_key.key_pair.public_key_openssh
 }
 
