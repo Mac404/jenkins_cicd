@@ -1,3 +1,6 @@
+#main Terraform file to generate Ubuntu instance, security groups, volumes, and S3 bucket
+
+#Create Ubuntu; Use HereDoc method(EOF) to install Apache2, copy files to replace Apache's default index file, and restart Apache
 resource "aws_instance" "public_instance" {
   ami           = var.ami
   instance_type = var.instance_type
@@ -26,11 +29,13 @@ resource "aws_instance" "public_instance" {
   key_name = aws_key_pair.autodeploy.key_name  # Link the key pair to the instance
 }
 
+#Use AWS key pair to upload local rsa key to the server to allow remote loginn from users' ip addresses.
 resource "aws_key_pair" "autodeploy" {
   key_name   = "autodeploy"  # Set a unique name for your key pair
   public_key = file("/var/jenkins_home/.ssh/id_rsa.pub")
 }
 
+#Create unique security group to allow authorized user access only by specific ip addr.
 #Create security group 
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins_sg"
@@ -44,6 +49,7 @@ resource "aws_security_group" "jenkins_sg" {
     protocol    = "TCP"
     cidr_blocks = ["69.42.6.44/32" , "98.42.124.215/32", "71.198.26.65/32", "108.84.158.98/32" ]
   }
+#ingress for incoming traffic limited to the ip's listed below
   ingress {
     from_port   = 80
     to_port     = 80
@@ -75,6 +81,7 @@ resource "aws_volume_attachment" "ebs" {
   instance_id = aws_instance.public_instance.id
 }
 
+#Create specific vpc allowed from specific subnet
 resource "aws_vpc" "main" {
   cidr_block = "10.10.0.0/16"
 
@@ -83,6 +90,7 @@ resource "aws_vpc" "main" {
   }
 }
 
+#Create a gateway
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
@@ -91,6 +99,7 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
+#Create a public subnet
 resource "aws_subnet" "public_subnets" {
      vpc_id = aws_vpc.main.id
      cidr_block = "10.10.1.0/24"
@@ -101,6 +110,7 @@ resource "aws_subnet" "public_subnets" {
        } 
 }
 
+#Create an S3 bucket
 resource "aws_subnet" "private_subnets" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.0/24"
@@ -110,7 +120,7 @@ resource "aws_subnet" "private_subnets" {
   }
 }
 
-
+#Attach subnet to the bucket
 resource "aws_route_table" "subnets" {
   vpc_id = aws_vpc.main.id
 
@@ -124,18 +134,19 @@ resource "aws_route_table" "subnets" {
   }
 }
 
+#Create a routing table
 resource "aws_route_table_association" "public_subnet_asso" {
     subnet_id = "${aws_subnet.public_subnets.id}"
     route_table_id = "${aws_route_table.subnets.id}"
 }
 
-
+#Associate table
 resource "aws_route_table_association" "private_subnet_asso" {
   subnet_id = "${aws_subnet.private_subnets.id}"
   route_table_id = "${aws_route_table.subnets.id}"
 }
 
-
+#Create a unique S3 Bucket for each individual account. Each user forking this code, must change the bucket value to a unique name in each github/aws instance.
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "siabucketvalue20240112"
   acl    = "private"
@@ -147,6 +158,8 @@ resource "aws_s3_bucket" "my_bucket" {
     enabled = true
   }
 }
+
+#Create bucket policy
 resource "aws_s3_bucket_policy" "BucketPolicy" {
   bucket = aws_s3_bucket.my_bucket.id
   policy = jsonencode({
