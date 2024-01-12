@@ -1,5 +1,5 @@
 resource "aws_instance" "windows-server" {
-     ami = var.win
+     ami = "${lookup(var.win, var.aws_region)}"
      instance_type = var.instance_type
      availability_zone = var.aws_region
      vpc_security_group_ids    = [aws_security_group.jenkins_sg.id]
