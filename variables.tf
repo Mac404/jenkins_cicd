@@ -43,12 +43,12 @@ variable "vpc_name" {
 variable "app_name" {
    type        = string
    description = "Instance type"
-   default     = ""
+   default     = "windows"
 }
 variable "app_environment" {
    type        = string
    description = "Instance type"
-   default     = ""
+   default     = "prod"
 }
 
 
