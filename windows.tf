@@ -2,7 +2,7 @@ resource "aws_instance" "windows-server" {
      ami = var.win_ami
      instance_type = var.instance_type
      vpc_security_group_ids    = [aws_security_group.windows.id]
-     key_name= "windows"
+     key_name= "windows_deploy"
 
  tags = {
     Name        = "windows"
@@ -38,14 +38,13 @@ resource "tls_private_key" "key_pair" {
 # Create the Key Pair
 resource "aws_key_pair" "key_pair" {
   key_name   = "windows_deploy"  
-  #public_key = file("/var/jenkins_home/.ssh/win.pem")
   public_key = tls_private_key.key_pair.public_key_openssh
 }
 
 # Save file
 resource "local_file" "ssh_key" {
-  filename = "${aws_key_pair.key_pair.key_name}.pem"
-  content  = tls_private_key.key_pair.private_key_pem
- 
+  filename = "/var/jenkins_home/.ssh/win.pem"
+  content  = tls_private_key.key_pair.private_key_pem 
 }
+
 
