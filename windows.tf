@@ -1,3 +1,6 @@
+#This Terraform file creates an AWS Windows instance with associated secruity groups & policies and will execute a Powershell script
+
+#Create Windows instance and run a Powershell command
 resource "aws_instance" "windows-server" {
      ami = var.win_ami
      instance_type = var.instance_type
