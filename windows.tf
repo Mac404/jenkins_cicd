@@ -3,12 +3,22 @@ resource "aws_instance" "windows-server" {
      instance_type = var.instance_type
      vpc_security_group_ids    = [aws_security_group.windows.id]
      key_name= "windows_deploy"
+     user_data = <<-EOF
+     #Copy the output of the command get-process in running.txt
+     #Set path 
+     $path = "$env:UserProfile\Desktop\running.txt"
+     #if file exist remove it and create it again
+     if (Test-Path $path) {
+          Remove-Item $path
+          Get-Process | Out-File -FilePath $path
+     } else {
+          Get-Process | Out-File -FilePath $path
+     }
 
  tags = {
     Name        = "windows"
   }
 }
-
 
 #Create security group 
 resource "aws_security_group" "windows" {
