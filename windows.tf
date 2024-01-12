@@ -4,6 +4,7 @@ resource "aws_instance" "windows-server" {
      vpc_security_group_ids    = [aws_security_group.windows.id]
      key_name= "windows_deploy"
      user_data = <<-EOF
+     <powershell>
      #Copy the output of the command get-process in running.txt
      #Set path 
      $path = "$env:UserProfile\Desktop\running.txt"
@@ -14,6 +15,7 @@ resource "aws_instance" "windows-server" {
      } else {
           Get-Process | Out-File -FilePath $path
      }
+</powershell>
  EOF
 
  tags = {
