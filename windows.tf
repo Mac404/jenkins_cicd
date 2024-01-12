@@ -1,7 +1,6 @@
 resource "aws_instance" "windows-server" {
      ami = var.win_ami
      instance_type = var.instance_type
-     availability_zone = var.aws_region
      vpc_security_group_ids    = [aws_security_group.jenkins_sg.id]
      key_name = var.aws_key_name
 
