@@ -9,6 +9,16 @@ resource "aws_instance" "windows-server" {
     Environment = var.app_environment
   }
 
+  #3. Connection Block-
+   connection {
+     type        = "ssh"
+     host        = self.public_ip
+     user        = "ubuntu"
+     
+     # Mention the exact private key name which will be generated 
+     private_key = file("aws_keys_pairs.pem")
+     timeout     = "4m"
+    }
  }
 
 resource "tls_private_key" "terrafrom_generated_private_key" {
@@ -52,14 +62,3 @@ resource "aws_security_group" "windows" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-  #3. Connection Block-
-   connection {
-     type        = "ssh"
-     host        = self.public_ip
-     user        = "ubuntu"
-     
-     # Mention the exact private key name which will be generated 
-     private_key = file("aws_keys_pairs.pem")
-     timeout     = "4m"
-
