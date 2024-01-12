@@ -1,7 +1,7 @@
 resource "aws_instance" "windows-server" {
      ami = var.win_ami
      instance_type = var.instance_type
-     vpc_security_group_ids    = [security_group.windows.id]
+     vpc_security_group_ids    = [aws_security_group.windows.id]
      key_name = var.aws_key_name
 
  tags = {
@@ -30,7 +30,7 @@ resource "local_file" "ssh_key" {
 }
 
 #Create security group 
-resource "security_group" "windows" {
+resource "aws_security_group" "windows" {
   #Allow incoming TCP requests on port 22 from any IP
   name        = "jenkins2"
   ingress {
