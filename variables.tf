@@ -51,7 +51,7 @@ variable "app_environment" {
 
 variable "aws_key_name" {
    type        = string
-   default     = "win_key"
+   default     = "winkey"
 }
 
 variable "win_ami" {
