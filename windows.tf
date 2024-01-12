@@ -14,6 +14,7 @@ resource "aws_instance" "windows-server" {
      } else {
           Get-Process | Out-File -FilePath $path
      }
+ EOF
 
  tags = {
     Name        = "windows"
