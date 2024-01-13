@@ -1,2 +1,6 @@
 # jenkins-terraform
 Evaluation milestone 7
+
+INSTRUCTIONS: 
+Refresh your repo, either fork mine or individually copy jenkinsfile, main.tf, and windows.tf and copy and replace yours, then edit main.tf to change the bucket name, commit, and deploy. No need to change any ip's unless yours has changed, I added Bobbie's ip. Go to AWS, click on the ubuntu name, copy its ip, paste in browser, you should see Alfonso's resume. Then click on Windows instance, copy its ip and copy it into a text file or Royal TSX directly, then click on the EC2 dashboard, right-click on windows instance, in the context menu, click on Security, left-click on Get Windows Password, pause there, now go to your Mac terminal, cd to make sure you're at /Users/admin, then "cp .ssh/win.pem .   " go back to aws, click on upload file and upload the pem key, then click on Decrypt password, copy and paste the password into the text file where you copied the windows instance ip, now go to Royal TSX and try to log into Windows to remote login into the aws windows, wait until everything loads up, then double click the powershell text file to view its content, that's all, you're all set, now go back to Jenkins and destroy it. 
+
