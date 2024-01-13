@@ -1,6 +1,3 @@
-#This is the main Terraform file that needs to be copied into Jenkins;
-#The Github Repo URL needs to change accordingly for each environment
-    
 pipeline {
     agent any
 
