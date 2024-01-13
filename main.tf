@@ -148,7 +148,7 @@ resource "aws_route_table_association" "private_subnet_asso" {
 
 #Create a unique S3 Bucket for each individual account. Each user forking this code, must change the bucket value to a unique name in each github/aws instance.
 resource "aws_s3_bucket" "my_bucket" {
-  bucket = "SiaDevBucketValue20240112"
+  bucket = "SiaStagingBucketValue20240112"
   acl    = "private"
   force_destroy = true
   lifecycle {
